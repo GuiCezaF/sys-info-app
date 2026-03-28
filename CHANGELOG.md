@@ -25,3 +25,5 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Unificação da cor do texto: agora a cor escolhida se aplica a todos os rótulos, botões e barras de progresso.
 - Correção visual do seletor de fonte (select) para garantir legibilidade dos itens.
 - Refatoração completa do HTML para uso de tags semânticas (<main>, <section>, <nav>, <header>, <ul>, <li>, <form>), melhorando a estrutura e acessibilidade.
+- Configuração de CI/CD via GitHub Actions para automação de builds (Windows, Linux, macOS).
+- Adicionado suporte ao instalador NSIS (.exe) para Windows.
