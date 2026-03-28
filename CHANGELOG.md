@@ -5,12 +5,13 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v1.0.2] - 2026-03-28
+## [v1.0.3] - 2026-03-28
 
 ### Corrigido
-- Falha no build de produção do Windows no GitHub Actions: restaurada a presença do `icon.ico` e outros ícones necessários para a geração do executável.
-- Sincronização de tags no CI: garantido que a tag de lançamento aponte para o commit mais recente com todos os artefatos.
-- Inconsistência de versão: unificada a versão do projeto para `1.0.2` no `tauri.conf.json`, `Cargo.toml` e `CHANGELOG.md`.
+- Falha no build de produção para Ubuntu e macOS no CI/CD: restaurados todos os tamanhos de ícones necessários (128x128, etc.) e corrigida a instalação de alvos do Rust no GitHub Actions.
+- Build do Mac Intel (x86_64): garantida a instalação do alvo correto no runner do macOS.
+
+## [v1.0.2] - 2026-03-28
 
 ## [v1.0.1] - 2026-03-28
 
