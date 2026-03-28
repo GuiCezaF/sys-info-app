@@ -1,9 +1,9 @@
 use std::sync::Mutex;
 use sysinfo::{Disks, System};
 use tauri::{
+    Emitter, Manager, State,
     menu::{Menu, MenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    Emitter, Manager, State,
 };
 
 #[derive(serde::Serialize)]
@@ -45,6 +45,21 @@ fn get_sys_info(state: State<'_, AppState>) -> SysInfo {
     }
 }
 
+#[tauri::command]
+fn update_tray_icon(
+    app: tauri::AppHandle,
+    rgba: Vec<u8>,
+    width: u32,
+    height: u32,
+) -> Result<(), String> {
+    let icon = tauri::image::Image::new_owned(rgba, width, height);
+
+    if let Some(tray) = app.tray_by_id("main-tray") {
+        tray.set_icon(Some(icon)).map_err(|e| e.to_string())?;
+    }
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let mut sys = System::new_all();
@@ -52,17 +67,21 @@ pub fn run() {
 
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_autostart::init(tauri_plugin_autostart::MacosLauncher::LaunchAgent, None))
+        .plugin(tauri_plugin_autostart::init(
+            tauri_plugin_autostart::MacosLauncher::LaunchAgent,
+            None,
+        ))
         .manage(AppState {
             sys: Mutex::new(sys),
         })
         .setup(|app| {
             let quit_i = MenuItem::with_id(app, "quit", "Sair", true, None::<&str>)?;
             let show_i = MenuItem::with_id(app, "show", "Mostrar", true, None::<&str>)?;
-            let settings_i = MenuItem::with_id(app, "settings", "Configurações", true, None::<&str>)?;
+            let settings_i =
+                MenuItem::with_id(app, "settings", "Configurações", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&show_i, &settings_i, &quit_i])?;
 
-            let _tray = TrayIconBuilder::new()
+            let _tray = TrayIconBuilder::with_id("main-tray")
                 .icon(app.default_window_icon().unwrap().clone())
                 .menu(&menu)
                 .on_menu_event(|app, event| match event.id.as_ref() {
@@ -109,7 +128,7 @@ pub fn run() {
                 window.hide().unwrap();
             }
         })
-        .invoke_handler(tauri::generate_handler![get_sys_info])
+        .invoke_handler(tauri::generate_handler![get_sys_info, update_tray_icon])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

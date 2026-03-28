@@ -1,6 +1,7 @@
 import React from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { type SysInfo } from "../hooks/useSysInfo";
+import { Icon } from "./Icon";
 
 interface DashboardProps {
   info: SysInfo | null;
@@ -26,13 +27,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ info }) => {
   };
 
   return (
-    <div 
-      className="app-container" 
-      data-tauri-drag-region
-      onMouseDown={handleMouseDown}
-    >
+    <div className="app-container">
       <header data-tauri-drag-region onMouseDown={handleMouseDown}>
-        <h1 data-tauri-drag-region>System Monitor</h1>
+        <div className="header-title" data-tauri-drag-region>
+          <Icon size={24} className="app-icon" />
+          <h1 data-tauri-drag-region>System Monitor</h1>
+        </div>
       </header>
 
       <section className="stats-section">

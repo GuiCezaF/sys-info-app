@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { enable, disable, isEnabled } from "@tauri-apps/plugin-autostart";
+import { Icon } from "./Icon";
 
 interface SettingsProps {
   onBack: () => void;
@@ -52,19 +53,18 @@ export const Settings: React.FC<SettingsProps> = ({
   };
 
   return (
-    <div 
-      className="app-container" 
-      data-tauri-drag-region
-      onMouseDown={handleMouseDown}
-    >
-      <nav data-tauri-drag-region>
+    <div className="app-container">
+      <nav data-tauri-drag-region onMouseDown={handleMouseDown}>
         <button className="back-btn" onClick={onBack}>
           ← Dashboard
         </button>
       </nav>
 
       <header data-tauri-drag-region onMouseDown={handleMouseDown}>
-        <h1 data-tauri-drag-region>Configurações</h1>
+        <div className="header-title" data-tauri-drag-region>
+          <Icon size={24} className="app-icon" />
+          <h1 data-tauri-drag-region>Configurações</h1>
+        </div>
       </header>
 
       <form className="settings-group" onSubmit={(e) => e.preventDefault()}>

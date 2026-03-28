@@ -18,6 +18,15 @@
   list-style: none;
 }
 
+input, select, textarea {
+  user-select: text;
+  cursor: text;
+}
+
+button, label, a, .checkbox-field {
+  cursor: pointer;
+}
+
 body {
   font-family: var(--font-family);
   background: transparent;
@@ -28,15 +37,16 @@ body {
   font-size: var(--font-size);
 }
 
-#root {
+#root, main {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .app-container {
   height: 100%;
   width: 100%;
-  padding: 1.25rem;
+  padding: 1.25rem 1.25rem 0; /* Padding inferior removido para o scroll ir até o fim */
   background: var(--bg-color);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -46,20 +56,35 @@ body {
   flex-direction: column;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
   animation: fadeIn 0.3s ease-out;
+  overflow: hidden; /* O container principal não rola, o conteúdo interno sim */
+}
+
+.back-btn, header, nav, .settings-btn {
+  flex-shrink: 0;
+}
+
+.settings-group, .stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
   overflow-y: auto;
+  padding-bottom: 1.5rem;
+  padding-right: 4px;
+  margin-top: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-color) transparent;
 }
 
-.app-container::-webkit-scrollbar {
-  width: 4px;
+.settings-group::-webkit-scrollbar, .stats-section::-webkit-scrollbar {
+  width: 6px;
 }
 
-.app-container::-webkit-scrollbar-track {
+.settings-group::-webkit-scrollbar-track, .stats-section::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.app-container::-webkit-scrollbar-thumb {
+.settings-group::-webkit-scrollbar-thumb, .stats-section::-webkit-scrollbar-thumb {
   background-color: var(--accent-color);
   border-radius: 20px;
 }
@@ -69,10 +94,22 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.app-icon {
+  color: var(--accent-color);
+  filter: drop-shadow(0 0 8px var(--accent-color));
+}
+
 h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0; /* Removido pois o container agora tem a margem */
   color: var(--text-color);
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

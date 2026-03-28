@@ -5,6 +5,15 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.1] - 2026-03-28
+
+### Corrigido
+- Problema de scroll na tela de configurações e dashboard: implementado cabeçalho fixo e scroll interno para garantir acessibilidade em janelas de baixa altura.
+- Visibilidade da janela na inicialização do aplicativo.
+- Desabilitado menu de contexto (botão direito) e DevTools em builds de produção para maior segurança.
+- Erro de ABI mismatch no compilador Rust (proc macro server error): resolvido através da limpeza completa do cache de compilação (`cargo clean`).
+- Implementado ícone dinâmico (`icon.svg`) que muda de cor conforme a cor de destaque do sistema/usuário, tanto na interface quanto na bandeja (Tray).
+
 ## [v1.0.0]
 
 ### Adicionado

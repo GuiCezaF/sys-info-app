@@ -14,10 +14,10 @@
       {
         "title": "sys-info-app",
         "width": 350,
-        "height": 250,
+        "height": 260,
         "decorations": false,
         "transparent": true,
-        "visible": false,
+        "visible": true,
         "resizable": false,
         "skipTaskbar": true
       }
