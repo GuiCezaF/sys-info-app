@@ -5,7 +5,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v1.0.0]
 
 ### Adicionado
 - Integração com `sysinfo` para monitoramento de CPU, Memória e Disco em tempo real.
@@ -24,3 +24,4 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Adicionada a opção de "Inicializar com o sistema" (Autostart) via plugin nativo.
 - Unificação da cor do texto: agora a cor escolhida se aplica a todos os rótulos, botões e barras de progresso.
 - Correção visual do seletor de fonte (select) para garantir legibilidade dos itens.
+- Refatoração completa do HTML para uso de tags semânticas (<main>, <section>, <nav>, <header>, <ul>, <li>, <form>), melhorando a estrutura e acessibilidade.

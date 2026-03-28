@@ -37,7 +37,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <main>
       {view === "dashboard" ? (
         <Dashboard info={info} />
       ) : (
@@ -51,7 +51,7 @@ function App() {
           setFontFamily={setFontFamily}
         />
       )}
-    </>
+    </main>
   );
 }
 

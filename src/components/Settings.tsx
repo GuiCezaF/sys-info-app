@@ -57,16 +57,21 @@ export const Settings: React.FC<SettingsProps> = ({
       data-tauri-drag-region
       onMouseDown={handleMouseDown}
     >
-      <button className="back-btn" onClick={onBack}>
-        ← Dashboard
-      </button>
+      <nav data-tauri-drag-region>
+        <button className="back-btn" onClick={onBack}>
+          ← Dashboard
+        </button>
+      </nav>
 
-      <h1 data-tauri-drag-region onMouseDown={handleMouseDown}>Configurações</h1>
+      <header data-tauri-drag-region onMouseDown={handleMouseDown}>
+        <h1 data-tauri-drag-region>Configurações</h1>
+      </header>
 
-      <div className="settings-group">
-        <div className="input-field">
-          <label>Tamanho da Fonte ({fontSize}px)</label>
+      <form className="settings-group" onSubmit={(e) => e.preventDefault()}>
+        <fieldset className="input-field">
+          <label htmlFor="font-size-slider">Tamanho da Fonte ({fontSize}px)</label>
           <input
+            id="font-size-slider"
             type="range"
             min="10"
             max="24"
@@ -74,20 +79,22 @@ export const Settings: React.FC<SettingsProps> = ({
             value={fontSize}
             onChange={(e) => setFontSize(Number(e.target.value))}
           />
-        </div>
+        </fieldset>
 
-        <div className="input-field">
-          <label>Cor do Texto</label>
+        <fieldset className="input-field">
+          <label htmlFor="text-color-picker">Cor do Texto</label>
           <input
+            id="text-color-picker"
             type="color"
             value={textColor}
             onChange={(e) => setTextColor(e.target.value)}
           />
-        </div>
+        </fieldset>
 
-        <div className="input-field">
-          <label>Fonte</label>
+        <fieldset className="input-field">
+          <label htmlFor="font-family-select">Fonte</label>
           <select
+            id="font-family-select"
             value={fontFamily}
             onChange={(e) => setFontFamily(e.target.value)}
           >
@@ -96,9 +103,9 @@ export const Settings: React.FC<SettingsProps> = ({
             <option value="'Inter', sans-serif">Inter</option>
             <option value="monospace">Monospace</option>
           </select>
-        </div>
+        </fieldset>
 
-        <div className="input-field checkbox-field">
+        <fieldset className="input-field checkbox-field">
           <label>
             <input
               type="checkbox"
@@ -107,8 +114,8 @@ export const Settings: React.FC<SettingsProps> = ({
             />
             Inicializar com o sistema
           </label>
-        </div>
-      </div>
+        </fieldset>
+      </form>
     </div>
   );
 };

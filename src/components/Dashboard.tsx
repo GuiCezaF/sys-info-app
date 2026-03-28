@@ -31,46 +31,50 @@ export const Dashboard: React.FC<DashboardProps> = ({ info }) => {
       data-tauri-drag-region
       onMouseDown={handleMouseDown}
     >
-      <h1 data-tauri-drag-region onMouseDown={handleMouseDown}>System Monitor</h1>
+      <header data-tauri-drag-region onMouseDown={handleMouseDown}>
+        <h1 data-tauri-drag-region>System Monitor</h1>
+      </header>
 
-      <div className="stats-grid">
-        <div className="stat-item">
-          <div className="stat-header">
-            <span>CPU</span>
-            <span className="stat-value">{info?.cpu_usage.toFixed(1)}%</span>
-          </div>
-          <div className="progress-bar">
-            <div
-              className="progress-fill"
-              style={{ width: `${info?.cpu_usage || 0}%` }}
-            />
-          </div>
-        </div>
+      <section className="stats-section">
+        <ul className="stats-grid">
+          <li className="stat-item">
+            <div className="stat-header">
+              <span>CPU</span>
+              <span className="stat-value">{info?.cpu_usage.toFixed(1)}%</span>
+            </div>
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${info?.cpu_usage || 0}%` }}
+              />
+            </div>
+          </li>
 
-        <div className="stat-item">
-          <div className="stat-header">
-            <span>Memória</span>
-            <span className="stat-value">
-              {info ? `${formatBytes(info.memory_used)} / ${formatBytes(info.memory_total)}` : "---"}
-            </span>
-          </div>
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${memPercent}%` }} />
-          </div>
-        </div>
+          <li className="stat-item">
+            <div className="stat-header">
+              <span>Memória</span>
+              <span className="stat-value">
+                {info ? `${formatBytes(info.memory_used)} / ${formatBytes(info.memory_total)}` : "---"}
+              </span>
+            </div>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: `${memPercent}%` }} />
+            </div>
+          </li>
 
-        <div className="stat-item">
-          <div className="stat-header">
-            <span>Disco</span>
-            <span className="stat-value">
-              {info ? `${formatBytes(info.disk_used)} / ${formatBytes(info.disk_total)}` : "---"}
-            </span>
-          </div>
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${diskPercent}%` }} />
-          </div>
-        </div>
-      </div>
+          <li className="stat-item">
+            <div className="stat-header">
+              <span>Disco</span>
+              <span className="stat-value">
+                {info ? `${formatBytes(info.disk_used)} / ${formatBytes(info.disk_total)}` : "---"}
+              </span>
+            </div>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: `${diskPercent}%` }} />
+            </div>
+          </li>
+        </ul>
+      </section>
     </div>
   );
 };
