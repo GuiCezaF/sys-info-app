@@ -1,6 +1,6 @@
 [package]
 name = "sys-info-app"
-version = "0.1.0"
+version = "1.0.2"
 license = "MIT"
 description = "A sleek system monitor tray app built with Rust and Tauri"
 authors = ["you"]
