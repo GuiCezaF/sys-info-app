@@ -1,50 +1,57 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
-import "./App.css";
+import { useState, useEffect } from "react";
+import { listen } from "@tauri-apps/api/event";
+import { useSysInfo } from "./hooks/useSysInfo";
+import { Dashboard } from "./components/Dashboard";
+import { Settings } from "./components/Settings";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const [view, setView] = useState<"dashboard" | "settings">("dashboard");
+  const info = useSysInfo();
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
+  // Preferências persistentes
+  const [fontSize, setFontSize] = useState(() => Number(localStorage.getItem("fontSize")) || 14);
+  const [textColor, setTextColor] = useState(() => localStorage.getItem("textColor") || "#f8fafc");
+  const [fontFamily, setFontFamily] = useState(() => localStorage.getItem("fontFamily") || "'Outfit', sans-serif");
+
+  useEffect(() => {
+    localStorage.setItem("fontSize", fontSize.toString());
+    localStorage.setItem("textColor", textColor);
+    localStorage.setItem("fontFamily", fontFamily);
+
+    document.documentElement.style.setProperty("--font-size", `${fontSize}px`);
+    document.documentElement.style.setProperty("--text-color", textColor);
+    document.documentElement.style.setProperty("--accent-color", textColor);
+    document.documentElement.style.setProperty("--font-family", fontFamily);
+  }, [fontSize, textColor, fontFamily]);
+
+  useEffect(() => {
+    // Escuta eventos de navegação vindos do sistema (tray)
+    const unlisten = listen<string>("navigate", (event) => {
+      if (event.payload === "dashboard") setView("dashboard");
+      if (event.payload === "settings") setView("settings");
+    });
+
+    return () => {
+      unlisten.then((f) => f());
+    };
+  }, []);
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
+    <>
+      {view === "dashboard" ? (
+        <Dashboard info={info} />
+      ) : (
+        <Settings
+          onBack={() => setView("dashboard")}
+          fontSize={fontSize}
+          setFontSize={setFontSize}
+          textColor={textColor}
+          setTextColor={setTextColor}
+          fontFamily={fontFamily}
+          setFontFamily={setFontFamily}
         />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+      )}
+    </>
   );
 }
 

@@ -13,8 +13,13 @@
     "windows": [
       {
         "title": "sys-info-app",
-        "width": 800,
-        "height": 600
+        "width": 350,
+        "height": 250,
+        "decorations": false,
+        "transparent": true,
+        "visible": false,
+        "resizable": false,
+        "skipTaskbar": true
       }
     ],
     "security": {
